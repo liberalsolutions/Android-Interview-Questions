@@ -151,3 +151,5 @@ Also according docs, what Java has that Kotlin does not:
 **Answer:**
 * The **open** keyword means “open for extension“. The open annotation on a class is the opposite of Java's `final`: _it allows others to inherit from this class_.
 * If you do not specify any visibility modifier, **public** is used by default, which means that your declarations will be visible everywhere. **public** is the default if nothing else is specified explicitly.
+
+
