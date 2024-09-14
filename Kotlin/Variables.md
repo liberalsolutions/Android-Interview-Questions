@@ -1,4 +1,4 @@
-### Q12: What is the difference between var and val in Kotlin? ☆☆
+### Q1: What is the difference between var and val in Kotlin? ☆☆
 
 **Answer:**
 * **var** is like `general` variable and it's known as a _mutable_ variable in kotlin and can be assigned multiple times.
@@ -18,7 +18,7 @@
 +----------------+-----------------------------+---------------------------+
 ```
 
-### Q17: Where should I use var and where val? ☆☆
+### Q2: Where should I use var and where val? ☆☆
 
 **Answer:**
 Use **var** where value is changing _frequently_. For example while getting location of android device:
@@ -33,7 +33,7 @@ Use **val** where there is _no change_ in value in whole class. For example you 
 val stringVariables : String = "Button's Constant or final Text"
 ```
 
-### Q7: What is the difference between “const” and “val”? ☆☆☆
+### Q3: What is the difference between “const” and “val”? ☆☆☆
 
 **Answer:**
 `const`s are compile time constants. Meaning that their value has to be assigned during compile time, unlike `val`s, where it can be done at runtime.
@@ -50,79 +50,7 @@ val fooVal = complexFunctionCall()      //Okay
 const val bar = "Hello world"           //Also okay
 ```
 
-### Q9: What is the idiomatic way to deal with nullable values, referencing or converting them? ☆☆☆
-
-**Details:**
-If I have a nullable type `Xyz?`, I want to reference it or convert it to a non-nullable type `Xyz`. What is the idiomatic way of doing so in Kotlin?
-
-**Answer:**
-You have several options:
-
-```kotlin
-val something: Xyz? = createPossiblyNullXyz()
-
-// access it as non-null asserting that with a sure call
-// throws an exception if the value is null
-val result1 = something!!.foo()
-
-// access it only if it is not null using safe operator, 
-// returning null otherwise
-val result2 = something?.foo()
-
-// access it only if it is not null using safe operator, 
-// otherwise a default value using the elvis operator
-val result3 = something?.foo() ?: differentValue
-
-// null check it with `if` expression and then use the value, 
-// similar to result3 but for more complex cases harder to do in one expression
-val result4 = if (something != null) {
-                   something.foo() 
-              } else { 
-                   ...
-                   differentValue 
-              }
-
-// null check it with `if` statement doing a different action
-if (something != null) { 
-    something.foo() 
-} else { 
-    someOtherAction() 
-}
-```
-
-### Q13: How to correctly concatenate a String in Kotlin? ☆☆
-
-**Answer:**
-In Kotlin, you can concatenate 
-1. using string interpolation / templates
- ```kotlin
-val a = "Hello"
-val b = "World"
-val c = "$a $b"
- ```
-2. using the + / `plus()` operator
- ```kotlin
- val a = "Hello"
- val b = "World" 
- val c = a + b   // same as calling operator function a.plus(b)
- val c = a.plus(b)
- 
- print(c)
- ```
-3. using the `StringBuilder`
- ```kotlin
- val a = "Hello"
- val b = "World"
- 
- val sb = StringBuilder()
- sb.append(a).append(b)
- val c = sb.toString()
- 
- print(c)
- ```
-
-
- ### Q11: val mutableList vs var immutableList. When to use which in Kotlin? ☆☆☆
+ ### Q4: val mutableList vs var immutableList. When to use which in Kotlin? ☆☆☆
 
 **Answer:**
 Mutable and immutable list increase the design clarity of the model. <br>
@@ -149,7 +77,7 @@ You have also some disadvantages:
 * In some cases, immutability can make the code more complex, when you tediously need to change single fields. In Kotlin, data classes come with a built-in copy() method where you can copy an instance, while providing new values for only some of the fields.
 
 
-### Q13: How is it recommended to create constants in Kotlin? ☆☆☆
+### Q5: How is it recommended to create constants in Kotlin? ☆☆☆
 
 **Answer:**
 In Kotlin, if you want to create the local constants which are supposed to be used with in the class then you can create it like below:

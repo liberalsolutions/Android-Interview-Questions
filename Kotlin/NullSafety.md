@@ -42,3 +42,43 @@ The Elvis operator is part of many programming languages, e.g. Kotlin but also G
 x ?: y // yields `x` if `x` is not null, `y` otherwise.
 ```
 If `x` isn't null, then it will be returned. If it is null, then the `y` will be returned. 
+
+### Q9: What is the idiomatic way to deal with nullable values, referencing or converting them? ☆☆☆
+
+**Details:**
+If I have a nullable type `Xyz?`, I want to reference it or convert it to a non-nullable type `Xyz`. What is the idiomatic way of doing so in Kotlin?
+
+**Answer:**
+You have several options:
+
+```kotlin
+val something: Xyz? = createPossiblyNullXyz()
+
+// access it as non-null asserting that with a sure call
+// throws an exception if the value is null
+val result1 = something!!.foo()
+
+// access it only if it is not null using safe operator, 
+// returning null otherwise
+val result2 = something?.foo()
+
+// access it only if it is not null using safe operator, 
+// otherwise a default value using the elvis operator
+val result3 = something?.foo() ?: differentValue
+
+// null check it with `if` expression and then use the value, 
+// similar to result3 but for more complex cases harder to do in one expression
+val result4 = if (something != null) {
+                   something.foo() 
+              } else { 
+                   ...
+                   differentValue 
+              }
+
+// null check it with `if` statement doing a different action
+if (something != null) { 
+    something.foo() 
+} else { 
+    someOtherAction() 
+}
+```
