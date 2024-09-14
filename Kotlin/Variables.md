@@ -99,3 +99,10 @@ object DbConstants {
 }
 ```
 
+### Q. Explain the concept of type inference in Kotlin. How does it help in reducing code verbosity?
+
+Answer: Type inference in Kotlin allows the compiler to automatically determine the type of a variable or expression based on its context. It eliminates the need for explicitly declaring the type, reducing code verbosity. Here's an example:
+```Kotlin
+val number = 42 // The compiler infers the type as Int
+val list = listOf(1, 2, 3) // The compiler infers the type as List<Int>
+```

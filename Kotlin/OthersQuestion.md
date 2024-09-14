@@ -109,3 +109,6 @@ The purpose is the same as C's or Java's `void`. Only Unit is a proper type, so 
 3. How to access that value of Unit: since it's a singleton object, just say `Unit`
 
 4. `UNIT` actually contains valuable information, it basically just means "DONE". It just returns the information to the caller, that the method has been finished. 
+
+
+> Explain the concept of generics in Kotlin. How are generics used in Android development?

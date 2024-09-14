@@ -107,11 +107,117 @@ When the app is built and run, Room automatically generates the migration logic,
 
 ## Supported Schema Changes for Auto-Migration
 
+* 1. Adding New Columns
+Auto-migration automatically handles adding new columns. When a column is added to an entity, Room detects the change and generates the necessary SQL to add that column to the table.
 
+Example: Adding a Column
+In version 3, let's add a new column `isPremium` to the `User` entity.
+```Kotlin
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey(autoGenerate = true) val userId: Int,
+    val name: String,
+    val age: Int,
+    val email: String,
+    val isPremium: Boolean // New field added
+)
 
+@Database(
+    entities = [User::class],
+    version = 3,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2), 
+        AutoMigration(from = 2, to = 3) // Add auto-migration from version 2 to 3
+    ]
+)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+}
+```
+Auto-migration will automatically add the isPremium column when upgrading from version 2 to 3.
 
+* 2. Renaming Columns
+You can use the `RenameColumn` annotation to specify the old and new column names.
 
+Example: Renaming a Column
+Suppose we want to rename the `age` column to `userAge` in version 4.
+```Kotlin
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey(autoGenerate = true) val userId: Int,
+    val name: String,
+    val userAge: Int, // Renamed from 'age'
+    val email: String,
+    val isPremium: Boolean
+)
 
+@Database(
+    entities = [User::class],
+    version = 4,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3),
+        AutoMigration(
+            from = 3, 
+            to = 4,
+            spec = AutoMigrationSpecVersion3To4::class // Custom spec for renaming
+        )
+    ]
+)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+}
+
+// Define the custom AutoMigrationSpec to rename the column
+@RenameColumn(tableName = "user", fromColumnName = "age", toColumnName = "userAge")
+class AutoMigrationSpecVersion3To4 : AutoMigrationSpec
+```
+
+Here, RenameColumn specifies that the age column should be renamed to userAge in the user table
+
+* 3. Dropping Columns
+While auto-migrations support adding new columns, dropping columns is trickier. Dropping columns requires manual migration since it involves data loss, which Room doesn't handle automatically.
+
+Writing Custom Migrations Alongside Auto-Migrations
+If your schema changes cannot be handled by auto-migration (e.g., transforming data, dropping columns), you can mix custom migrations with auto-migrations.
+
+Example: Custom Migration
+Suppose we want to migrate from version 4 to version 5, where we drop the isPremium column.
+```kotlin
+val MIGRATION_4_5 = object : Migration(4, 5) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        // Manually drop the column
+        database.execSQL("CREATE TABLE new_user (userId INTEGER PRIMARY KEY NOT NULL, name TEXT, userAge INTEGER, email TEXT)")
+        database.execSQL("INSERT INTO new_user (userId, name, userAge, email) SELECT userId, name, userAge, email FROM user")
+        database.execSQL("DROP TABLE user")
+        database.execSQL("ALTER TABLE new_user RENAME TO user")
+    }
+}
+
+@Database(
+    entities = [User::class],
+    version = 5,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+        AutoMigration(from = 2, to = 3),
+        AutoMigration(from = 3, to = 4)
+    ]
+)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+
+    companion object {
+        fun getDatabase(context: Context): AppDatabase {
+            return Room.databaseBuilder(
+                context,
+                AppDatabase::class.java,
+                "app_database"
+            ).addMigrations(MIGRATION_4_5) // Add custom migration here
+            .build()
+        }
+    }
+}
+```
 
 
 
