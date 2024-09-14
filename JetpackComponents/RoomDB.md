@@ -63,7 +63,7 @@ The key components are:
 
 ### Q12. How to Set Up Room Auto-Migration
 
-Step 1: Defining the Initial Database Schema
+* Step 1: Defining the Initial Database Schema
 ```Kotlin
 @Entity(tableName = "user")
 data class User(
@@ -77,8 +77,44 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }
 ```
-The database contains a single table user with three fields: userId, name, and age.
+The database contains a single table user with three fields: `userId`, `name`, and `age`.
 The database version is set to 1.
+
+* Step 2: Introducing Schema Changes (Version 2)
+Suppose we need to introduce a new field, email, to the User entity. This change requires a migration from version 1 to version 2.
+
+```Kotlin
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey(autoGenerate = true) val userId: Int,
+    val name: String,
+    val age: Int,
+    val email: String // New field added
+)
+@Database(
+    entities = [User::class],
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2) // Define auto-migration
+    ]
+)
+abstract class AppDatabase : RoomDatabase() {
+    abstract fun userDao(): UserDao
+}
+```
+* Step 3: Building the App
+When the app is built and run, Room automatically generates the migration logic, adding the email column to the user table. You no longer need to manually write a migration script.
+
+## Supported Schema Changes for Auto-Migration
+
+
+
+
+
+
+
+
+
 
 > How does Room handle relationships between entities?
 > What are some best practices for optimizing database performance with Room?
