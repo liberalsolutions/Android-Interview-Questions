@@ -29,23 +29,6 @@ enum class Direction(val degrees: Int) {
 }
 ```
 
-### 3. Can enums have properties and methods?
-
-Yes, enums can have properties and methods.
-
-```kotlin
-enum class Direction(val degrees: Int) {
-    NORTH(0),
-    EAST(90),
-    SOUTH(180),
-    WEST(270);
-    
-    fun rotate(degrees: Int): Direction {
-        val newDegrees = (this.degrees + degrees) % 360
-        return values().first { it.degrees == newDegrees }
-    }
-}
-```
 ### 4. How are enum constants accessed in Kotlin?
 Enum constants are accessed using their names.
 
@@ -91,6 +74,7 @@ enum class Weekday : Printable {
 
 ### 9. What is the use of the `valueOf()` function in enums?
 The `valueOf()` function is used to obtain an enum constant by its name.
+
 ### 10. How do you define custom methods for individual enum constants?
 Custom methods are defined inside the enum class, as shown in a previous example.
 
@@ -106,8 +90,8 @@ enum class Planet(val mass: Double, val radius: Double) {
 }
 ```
 
-### 12. How do you get the ordinal value of an enum constant?
-The ordinal value represents the position of an enum constant in the declaration order.
+### 12. How do you get the `ordinal` value of an enum constant?
+The `ordinal` value represents the `position` of an enum constant in the declaration order.
 
 ```kotlin
 val ordinalValue: Int = Color.RED.ordinal
@@ -132,6 +116,11 @@ when {
 
 ### 15. What is the significance of the `compareTo()` function in enums?
 The `compareTo()` function is used to compare the ordinal values of two enum constants.
+
+```kotlin
+println(Direction.WEST.name.compareTo(Direction.EAST.name)) // Return 18 as W is ahed of E
+println(Direction.WEST.compareTo(Direction.EAST)) // Retun 2 as it West Comes after East in the order
+```
 ### 16. How can you iterate over the constants of an enum using a loop?
 Enums can be iterated using a loop or using the values() function.
 
