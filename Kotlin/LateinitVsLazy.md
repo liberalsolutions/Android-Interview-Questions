@@ -1,5 +1,5 @@
 
-### Q6: What is Lateinit in Kotlin and when would you use it? ☆☆☆
+### Q1: What is Lateinit in Kotlin and when would you use it? ☆☆☆
 
 **Answer:**
 **lateinit** means _late initialization_. If you do not want to initialize a variable in the constructor instead you want to initialize it later on and if you can guarantee the initialization before using it, then declare that variable with lateinit keyword. It will not allocate memory until initialized. You cannot use lateinit for primitive type properties like Int, Long etc.
@@ -14,7 +14,7 @@ fun doSomething() {
 }
 ```
 
-### Q7: Explain lazy initialization in Kotlin ☆☆☆
+### Q2: Explain lazy initialization in Kotlin ☆☆☆
 
 **Answer:**
 **lazy** means lazy initialization. Your variable will not be initialized unless you use that variable in your code. It will be initialized only once after that we always use the same value.
@@ -24,9 +24,12 @@ fun doSomething() {
 ```kotlin
 val test: String by lazy {
     val testString = "some value"
+    testString // it has to be return
 }
 ```
-
+```Kotlin
+val myLazyString: String by lazy { "Hello" }
+```
 There are a handful of use cases where this is extremely helpful, for example:
 
 * Android: variables that get initialized in lifecycle methods;

@@ -47,3 +47,7 @@ val sum: (Int, Int) -> Int = { a, b -> a + b }
 val result = performOperation(5, 3, sum) // result will be 8
 ```
 
+### Q. What is the difference between a lambda expression and an anonymous function in Kotlin?
+
+
+### Q. What is a higher-order function with receiver in Kotlin.

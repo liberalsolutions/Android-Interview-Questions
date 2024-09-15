@@ -99,10 +99,38 @@ object DbConstants {
 }
 ```
 
-### Q. Explain the concept of type inference in Kotlin. How does it help in reducing code verbosity?
+### Q. Explain the concept of `type inference` in Kotlin. How does it help in reducing code verbosity?
 
 Answer: Type inference in Kotlin allows the compiler to automatically determine the type of a variable or expression based on its context. It eliminates the need for explicitly declaring the type, reducing code verbosity. Here's an example:
 ```Kotlin
 val number = 42 // The compiler infers the type as Int
 val list = listOf(1, 2, 3) // The compiler infers the type as List<Int>
+```
+
+### Q. What are the visibility modifiers available in Kotlin? Explain each one briefly.
+
+Kotlin provides four visibility modifiers:
+
+* private: Visible only within the same file.
+* protected: Visible within the same file and subclasses.
+* internal: Visible within the same module.
+* public: Visible everywhere (default if no modifier is specified).
+
+
+### Q.  What is the purpose of the operator modifier in Kotlin?
+
+The operator modifier in Kotlin is used to overload or define custom behavior for operators. It allows you to provide custom implementations for built-in operators such as +, -, *, /, ==, !=, etc. By using the operator modifier, you can define how your objects should behave when operated upon with specific operators. Here's an example:
+```Kotlin
+data class Point(val x: Int, val y: Int) {
+    operator fun plus(other: Point): Point {
+        return Point(x + other.x, y + other.y)
+    }
+}
+
+fun main() {
+    val p1 = Point(1, 2)
+    val p2 = Point(3, 4)
+    val sum = p1 + p2
+    println(sum) // Output: Point(x=4, y=6)
+}
 ```
