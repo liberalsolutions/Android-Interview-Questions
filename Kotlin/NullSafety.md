@@ -1,4 +1,4 @@
-### Q3: Explain the Null safety in Kotlin ☆☆☆
+### Q1: Explain the Null safety in Kotlin ☆☆☆
 
 **Answer:**
 Kotlin's type system is aimed at eliminating the danger of null references from code, also known as the The Billion Dollar Mistake.
@@ -18,7 +18,10 @@ b = null // ok
 print(b)
 ```
 
-### Q17: What is the Kotlin double-bang (!!) operator? ☆☆☆
+### Q2. What is the purpose of the safe call operator (?.) in Kotlin?
+Answer: The safe call operator ?. is used to safely access a property or call a method on a nullable object. It returns null if the object is null instead of throwing a NullPointerException. Example:
+
+### Q3: What is the Kotlin double-bang (!!) operator? ☆☆☆
 
 **Answer:**
 The **not-null assertion operator !!** converts any value to a non-null type and throws a `KotlinNullPointerException` exception if the value is null.
@@ -33,7 +36,7 @@ fun main(args: Array<String>) {
 ```
 This operator should be used in cases where the developer is guaranteeing – it allows you to be 100% sure that its value is not null. 
 
-### Q19: When would you use Elvis operator in Kotlin? ☆☆☆
+### Q4: When would you use Elvis operator in Kotlin? ☆☆☆
 
 **Answer:**
 The Elvis operator is part of many programming languages, e.g. Kotlin but also Groovy or C#. The Elvis operator is the ternary operator with its second operand omitted.
@@ -43,7 +46,7 @@ x ?: y // yields `x` if `x` is not null, `y` otherwise.
 ```
 If `x` isn't null, then it will be returned. If it is null, then the `y` will be returned. 
 
-### Q9: What is the idiomatic way to deal with nullable values, referencing or converting them? ☆☆☆
+### Q5: What is the idiomatic way to deal with nullable values, referencing or converting them? ☆☆☆
 
 **Details:**
 If I have a nullable type `Xyz?`, I want to reference it or convert it to a non-nullable type `Xyz`. What is the idiomatic way of doing so in Kotlin?

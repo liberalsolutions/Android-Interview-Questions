@@ -50,9 +50,9 @@ Answer: The safe call operator ?. is used to safely access a property or call a 
 
 Answer: The Elvis operator ?: is used to provide a default value when the left-hand expression is null. Example:
 
-### Q. How does the range operator (..) work in Kotlin?
+### Q. How does the range operator `(..)` work in Kotlin?
 
-Answer: The range operator .. is used to create a range of values. It can be used with numeric types or characters. Example:
+Answer: The range operator `..` is used to create a range of values. It can be used with numeric types or characters. Example:
 
 ### Q. How can you define a reverse range in Kotlin?
 
