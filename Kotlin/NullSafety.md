@@ -85,3 +85,64 @@ if (something != null) {
     someOtherAction() 
 }
 ```
+
+### Q6. How do you declare a nullable type in Kotlin?
+Answer: You declare a nullable type by appending ? to the type declaration
+
+```Kotlin
+var name: String? = null
+```
+
+
+### Q7. What is the purpose of the safe call operator (?.), and how is it used?
+
+Answer: The safe call operator (?.) is used to safely access a property or method on a nullable object. If the object is null, it returns null instead of throwing a NullPointerException. Example:
+
+```Kotlin
+val name: String? = null
+val length = name?.length  // Safely returns null if 'name' is null
+println(length)  // Output: null
+```
+
+### Q8. What is the safe cast operator (as?) in Kotlin, and how is it different from regular type casting?
+
+The safe cast operator (as?) attempts to cast a value to a type. If the cast fails, it returns null instead of throwing a ClassCastException. Example:
+
+### Q9: What is the purpose of the let function in Kotlin, and how is it used with null safety?
+Answer: The let function is used to execute a block of code only if the variable is non-null. It’s commonly used with nullable types for safe code execution. Example:
+```Kotlin
+val name: String? = "Kotlin"
+name?.let {
+    println("Name length: ${it.length}")  // Only runs if 'name' is non-null
+}
+```
+
+### Q10. How do you handle nullability in Kotlin collections (e.g., list, map)?
+Collections in Kotlin can either allow null values or be non-nullable. You can define a nullable collection element by using T? for the element type. Example:
+
+```Kotlin
+Collections in Kotlin can either allow null values or be non-nullable. You can define a nullable collection element by using T? for the element type. Example:
+```
+
+### Q11. What is a smart cast in Kotlin, and how does it relate to null safety?
+
+Smart cast automatically casts a variable to a non-nullable type when Kotlin can be sure that the variable isn't null. This happens typically after a null check (if or when condition). Example:
+
+```Kotlin
+val name: String? = "Kotlin"
+if (name != null) {
+    println(name.length)  // Smart cast: no need for name?.length
+}
+```
+
+### Q12. How does Kotlin handle null safety for function parameters?
+
+In Kotlin, you can explicitly declare function parameters as nullable by using the ? symbol. The function should handle the possible null cases appropriately, either using safe calls, the Elvis operator, or null checks. Example:
+
+```Kotlin
+fun printLength(str: String?) {
+    val length = str?.length ?: "String is null"
+    println(length)
+}
+```
+
