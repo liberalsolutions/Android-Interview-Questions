@@ -40,7 +40,9 @@ Job is a handle to a coroutine's lifecycle. It represents the coroutine’s life
 Answer:
 
 `Dispatchers.IO`: Optimized for offloading blocking I/O operations (e.g., network or file operations).
+
 `Dispatchers.Default`: Optimized for CPU-intensive tasks (e.g., sorting a large dataset, computations).
+
 `Dispatchers.Main`: Used for tasks that need to run on the main (UI) thread, usually for updating the UI.
 
 ### Q10. What is structured concurrency in Kotlin coroutines?
@@ -65,7 +67,7 @@ Answer:
 You can handle exceptions in Kotlin coroutines using:
 
 try-catch within a coroutine to catch specific exceptions.
-CoroutineExceptionHandler to handle uncaught exceptions at the coroutine scope level.
+`CoroutineExceptionHandler` to handle uncaught exceptions at the coroutine scope level.
 Structured concurrency ensures that if a coroutine fails, its parent and siblings can handle or cancel appropriately based on their structure (e.g., using SupervisorJob).
 
 ### Q15: What is the difference between suspending vs. blocking? ☆☆☆
