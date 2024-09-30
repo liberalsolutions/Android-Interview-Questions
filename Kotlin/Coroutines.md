@@ -29,7 +29,7 @@ Coroutine Builders are functions that are used to create and start coroutines. E
 
 ### Q7.  What is a CoroutineScope? Why is it important?
 Answer:
-CoroutineScope defines the lifecycle of coroutines. It provides context, such as the dispatcher and job, to coroutines. It's important because it helps manage coroutines' lifecycle by ensuring that all coroutines launched within the scope are properly structured and canceled when needed.
+`CoroutineScope` defines the lifecycle of coroutines. It provides context, such as the dispatcher and job, to coroutines. It's important because it helps manage coroutines' lifecycle by ensuring that all coroutines launched within the scope are properly structured and canceled when needed.
 
 ### Q8.  What is Job in Kotlin Coroutines? How do you cancel a job?
 Answer:
@@ -109,3 +109,255 @@ runBlocking {
 }
 ```
 You might say that **CoroutineScope** formalizes the way the **CoroutineContext** is inherited. You can see how the **CoroutineScope** mediates the inheritance of coroutine contexts. If you cancel the job in `scope1`, this will propagate to `scope2` and will cancel the launched job as well.
+
+
+### Q18. Types of CoroutineScope with examples and when should use which coroutinesScope?
+In Kotlin, CoroutineScope is an interface that manages the lifecycle of coroutines. Different types of CoroutineScopes are available depending on the use case and the need for structured concurrency. Here are the key types of CoroutineScopes and their examples, along with guidance on when to use each one:
+
+1. GlobalScope
+* GlobalScope is a global coroutine scope that is not tied to any specific lifecycle. It lives throughout the application's lifetime and should be used carefully to avoid memory leaks.
+* Use GlobalScope for background tasks that should run independently of the app's lifecycle, such as logging, analytics, or tasks that should continue running regardless of the lifecycle of the UI or component.
+```Java
+fun main() {
+    GlobalScope.launch {
+        delay(1000)
+        println("Running in GlobalScope")
+    }
+    Thread.sleep(2000)  // To keep the JVM alive for coroutine execution
+}
+```
+* Caution: Avoid using GlobalScope in Android apps or applications with component lifecycles, as it can lead to memory leaks or running coroutines even after the app/component is destroyed.
+
+2. runBlocking
+
+* runBlocking is a coroutine builder that bridges between regular code and coroutine code by blocking the current thread until all coroutines inside it complete.
+* Use runBlocking in unit tests or main functions where you want to call suspending functions from a non-suspending context. It is often used for testing or in small standalone applications, but avoid using it in production code, especially on Android's main thread, as it blocks the thread.
+```Java
+fun main() = runBlocking {
+    launch {
+        delay(1000)
+        println("Running in runBlocking")
+    }
+    println("Coroutine is launched")
+}
+```
+*  This blocks the thread, so using it in a UI thread or on the Android main thread can cause the UI to freeze.
+
+3. CoroutineScope (Custom Scope)
+* CoroutineScope allows you to create custom scopes for managing coroutines based on your use case, often tied to specific components, objects, or lifecycle events
+* Use CoroutineScope when you need structured concurrency in a specific part of your code, such as a ViewModel in Android or a long-running background task. The lifecycle of the coroutines will be tied to the object implementing this scope, ensuring proper cleanup of coroutines.
+```Java
+class MyCustomScope : CoroutineScope {
+    private val job = Job()
+    override val coroutineContext = Dispatchers.Default + job
+
+    fun startTask() {
+        launch {
+            delay(1000)
+            println("Task running in custom CoroutineScope")
+        }
+    }
+
+    fun cleanup() {
+        job.cancel()  // Cancel all coroutines when no longer needed
+    }
+}
+
+fun main() {
+    val myScope = MyCustomScope()
+    myScope.startTask()
+    Thread.sleep(2000)
+    myScope.cleanup()
+}
+```
+* This is useful when you want to tie coroutine lifecycle to a specific object or lifecycle (e.g., ViewModel in Android) and manage the job manually.
+
+4. MainScope
+* MainScope is typically used in Android development and automatically uses Dispatchers.Main as the context for its coroutines. This scope is useful for UI-related tasks as it uses the main thread.
+* Use MainScope for UI-related tasks that need to be tied to an Android activity or fragment's lifecycle. It's commonly used for launching coroutines that update the UI.
+```Java
+class MyActivity : CoroutineScope by MainScope() {
+    fun startTask() {
+        launch {
+            delay(1000)
+            println("Task running on Main Thread")
+        }
+    }
+
+    fun onDestroy() {
+        cancel()  // Cancel all coroutines tied to this scope
+    }
+}
+```
+
+*  This is useful in Android development, where coroutines need to be tied to the UI lifecycle, such as in Activities or Fragments.
+
+5. ViewModelScope (Android)
+* ViewModelScope is provided by the Android Jetpack library and is tied to the lifecycle of the ViewModel. When the ViewModel is cleared, all coroutines started in this scope are canceled.
+* Use ViewModelScope for UI-related coroutines that need to survive configuration changes but be canceled when the ViewModel is cleared, such as loading data in the background or handling long-running tasks.
+```Java
+class MyViewModel : ViewModel() {
+    fun fetchData() {
+        viewModelScope.launch {
+            delay(1000)
+            println("Task running in ViewModelScope")
+        }
+    }
+}
+```
+* This is best for managing coroutines in ViewModel, especially for background tasks like fetching data or handling UI-related logic.
+
+
+In Kotlin, CoroutineScope is an interface that manages the lifecycle of coroutines. Different types of CoroutineScopes are available depending on the use case and the need for structured concurrency. Here are the key types of CoroutineScopes and their examples, along with guidance on when to use each one:
+
+1. GlobalScope
+Description:
+
+GlobalScope is a global coroutine scope that is not tied to any specific lifecycle. It lives throughout the application's lifetime and should be used carefully to avoid memory leaks.
+When to Use:
+
+Use GlobalScope for background tasks that should run independently of the app's lifecycle, such as logging, analytics, or tasks that should continue running regardless of the lifecycle of the UI or component.
+Example:
+
+kotlin
+Copy code
+import kotlinx.coroutines.*
+
+fun main() {
+    GlobalScope.launch {
+        delay(1000)
+        println("Running in GlobalScope")
+    }
+    Thread.sleep(2000)  // To keep the JVM alive for coroutine execution
+}
+Caution: Avoid using GlobalScope in Android apps or applications with component lifecycles, as it can lead to memory leaks or running coroutines even after the app/component is destroyed.
+
+2. runBlocking
+Description:
+
+runBlocking is a coroutine builder that bridges between regular code and coroutine code by blocking the current thread until all coroutines inside it complete.
+When to Use:
+
+Use runBlocking in unit tests or main functions where you want to call suspending functions from a non-suspending context. It is often used for testing or in small standalone applications, but avoid using it in production code, especially on Android's main thread, as it blocks the thread.
+Example:
+
+kotlin
+Copy code
+import kotlinx.coroutines.*
+
+fun main() = runBlocking {
+    launch {
+        delay(1000)
+        println("Running in runBlocking")
+    }
+    println("Coroutine is launched")
+}
+Caution: This blocks the thread, so using it in a UI thread or on the Android main thread can cause the UI to freeze.
+
+3. CoroutineScope (Custom Scope)
+Description:
+
+CoroutineScope allows you to create custom scopes for managing coroutines based on your use case, often tied to specific components, objects, or lifecycle events.
+When to Use:
+
+Use CoroutineScope when you need structured concurrency in a specific part of your code, such as a ViewModel in Android or a long-running background task. The lifecycle of the coroutines will be tied to the object implementing this scope, ensuring proper cleanup of coroutines.
+Example:
+
+kotlin
+Copy code
+import kotlinx.coroutines.*
+
+class MyCustomScope : CoroutineScope {
+    private val job = Job()
+    override val coroutineContext = Dispatchers.Default + job
+
+    fun startTask() {
+        launch {
+            delay(1000)
+            println("Task running in custom CoroutineScope")
+        }
+    }
+
+    fun cleanup() {
+        job.cancel()  // Cancel all coroutines when no longer needed
+    }
+}
+
+fun main() {
+    val myScope = MyCustomScope()
+    myScope.startTask()
+    Thread.sleep(2000)
+    myScope.cleanup()
+}
+Use Case: This is useful when you want to tie coroutine lifecycle to a specific object or lifecycle (e.g., ViewModel in Android) and manage the job manually.
+
+4. MainScope
+Description:
+
+MainScope is typically used in Android development and automatically uses Dispatchers.Main as the context for its coroutines. This scope is useful for UI-related tasks as it uses the main thread.
+When to Use:
+
+Use MainScope for UI-related tasks that need to be tied to an Android activity or fragment's lifecycle. It's commonly used for launching coroutines that update the UI.
+Example:
+
+kotlin
+Copy code
+import kotlinx.coroutines.*
+
+class MyActivity : CoroutineScope by MainScope() {
+    fun startTask() {
+        launch {
+            delay(1000)
+            println("Task running on Main Thread")
+        }
+    }
+
+    fun onDestroy() {
+        cancel()  // Cancel all coroutines tied to this scope
+    }
+}
+Use Case: This is useful in Android development, where coroutines need to be tied to the UI lifecycle, such as in Activities or Fragments.
+
+5. ViewModelScope (Android)
+Description:
+
+ViewModelScope is provided by the Android Jetpack library and is tied to the lifecycle of the ViewModel. When the ViewModel is cleared, all coroutines started in this scope are canceled.
+When to Use:
+
+Use ViewModelScope for UI-related coroutines that need to survive configuration changes but be canceled when the ViewModel is cleared, such as loading data in the background or handling long-running tasks.
+Example:
+
+kotlin
+Copy code
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+
+class MyViewModel : ViewModel() {
+    fun fetchData() {
+        viewModelScope.launch {
+            delay(1000)
+            println("Task running in ViewModelScope")
+        }
+    }
+}
+Use Case: This is best for managing coroutines in ViewModel, especially for background tasks like fetching data or handling UI-related logic.
+
+6. LifecycleScope (Android)
+
+* LifecycleScope is an Android-specific scope tied to a LifecycleOwner (like an Activity or Fragment). Coroutines in this scope are automatically canceled when the lifecycle reaches a certain state.
+
+* Use LifecycleScope in Activities or Fragments for coroutines that should be canceled when the lifecycle reaches a specific state (e.g., when the activity is destroyed).
+```Java
+class MyFragment : Fragment() {
+    fun startTask() {
+        lifecycleScope.launch {
+            delay(1000)
+            println("Task running in LifecycleScope")
+        }
+    }
+}
+```
+
+* Best for tying coroutines to the Android lifecycle, such as in Fragments or Activities, to ensure they are automatically canceled when no longer needed.
+![alt text](image-1.png)
