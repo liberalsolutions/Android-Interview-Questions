@@ -105,7 +105,7 @@ abstract class AppDatabase : RoomDatabase() {
 * Step 3: Building the App
 When the app is built and run, Room automatically generates the migration logic, adding the email column to the user table. You no longer need to manually write a migration script.
 
-## Supported Schema Changes for Auto-Migration
+## Q13. Supported Schema Changes for Auto-Migration
 
 * 1. Adding New Columns
 Auto-migration automatically handles adding new columns. When a column is added to an entity, Room detects the change and generates the necessary SQL to add that column to the table.
