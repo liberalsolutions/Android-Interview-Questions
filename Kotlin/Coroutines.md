@@ -360,4 +360,5 @@ class MyFragment : Fragment() {
 ```
 
 * Best for tying coroutines to the Android lifecycle, such as in Fragments or Activities, to ensure they are automatically canceled when no longer needed.
+
 ![alt text](image-1.png)
