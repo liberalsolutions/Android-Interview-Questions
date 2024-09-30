@@ -15,7 +15,7 @@ Seamless integration with other Jetpack components, such as LiveData and ViewMod
 
 You can pass data to a Worker class by using the `setInputData()` method when creating the WorkRequest. This method allows you to attach a Data object containing `key-value` pairs. Inside the Worker's `doWork()` method, you can retrieve the data using the `getInputData()` method.
 
-```Kotlin
+```Java
 Data inputData = new Data.Builder()
     .putString("key", "value")
     .build();
@@ -29,7 +29,7 @@ OneTimeWorkRequest myWorkRequest = new OneTimeWorkRequest.Builder(MyWorker.class
 
 WorkManager provides a LiveData object called `WorkInfo` that allows you to observe the progress and status of a Worker. By using the `getWorkInfoByIdLiveData()` method, you can obtain the `WorkInfo` object and observe it to get updates on the task's progress, output, and completion status.
 
-```Kotlin
+```Java
 WorkManager.getInstance(context).getWorkInfoByIdLiveData(workRequestId)
     .observe(owner, workInfo -> {
         if (workInfo != null && workInfo.getState().isFinished()) {
@@ -45,7 +45,7 @@ WorkManager.getInstance(context).getWorkInfoByIdLiveData(workRequestId)
 ### Q5. How can you chain multiple work requests together?
 To chain multiple work requests together, you can use the then() method on a WorkRequest object. This method allows you to specify another WorkRequest that should run after the current one completes. By chaining work requests, you can define a sequence of tasks and ensure they are executed in the desired order.
 
-```Kotlin
+```Java
 OneTimeWorkRequest firstWorkRequest = new OneTimeWorkRequest.Builder(FirstWorker.class).build();
 OneTimeWorkRequest secondWorkRequest = new OneTimeWorkRequest.Builder(SecondWorker.class).build();
 
@@ -58,7 +58,7 @@ WorkManager.getInstance(context)
 ### Q6. How can you handle and retry failed tasks in WorkManager?
 WorkManager automatically handles failed tasks by respecting the retry policy defined for the WorkRequest. You can specify the retry policy using the setBackoffCriteria() method, which allows you to define the initial and maximum delay for retries. WorkManager intelligently applies exponential backoff to retries, giving failed tasks a chance to succeed without overwhelming system resources.
 
-```Kotlin
+```Java
 // Set exponential backoff with a 1-minute initial delay and a maximum of 3 retries
 OneTimeWorkRequest myWorkRequest = new OneTimeWorkRequest.Builder(MyWorker.class)
     .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, OneTimeWorkRequest.MIN_BACKOFF_MILLIS, TimeUnit.MILLISECONDS)

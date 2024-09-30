@@ -64,7 +64,7 @@ The key components are:
 ### Q12. How to Set Up Room Auto-Migration
 
 * Step 1: Defining the Initial Database Schema
-```Kotlin
+```Java
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val userId: Int,
@@ -83,7 +83,7 @@ The database version is set to 1.
 * Step 2: Introducing Schema Changes (Version 2)
 Suppose we need to introduce a new field, email, to the User entity. This change requires a migration from version 1 to version 2.
 
-```Kotlin
+```Java
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val userId: Int,
@@ -112,7 +112,7 @@ Auto-migration automatically handles adding new columns. When a column is added 
 
 Example: Adding a Column
 In version 3, let's add a new column `isPremium` to the `User` entity.
-```Kotlin
+```Java
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val userId: Int,
@@ -141,7 +141,7 @@ You can use the `RenameColumn` annotation to specify the old and new column name
 
 Example: Renaming a Column
 Suppose we want to rename the `age` column to `userAge` in version 4.
-```Kotlin
+```Java
 @Entity(tableName = "user")
 data class User(
     @PrimaryKey(autoGenerate = true) val userId: Int,
@@ -183,7 +183,7 @@ If your schema changes cannot be handled by auto-migration (e.g., transforming d
 
 Example: Custom Migration
 Suppose we want to migrate from version 4 to version 5, where we drop the isPremium column.
-```kotlin
+```Java
 val MIGRATION_4_5 = object : Migration(4, 5) {
     override fun migrate(database: SupportSQLiteDatabase) {
         // Manually drop the column
