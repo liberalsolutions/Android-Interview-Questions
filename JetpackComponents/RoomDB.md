@@ -19,7 +19,8 @@ Answer: A DAO (Data Access Object) in Room is an interface that defines methods 
 
 ### Q5. Explain the difference between LiveData and Flow in Room.
 
-Answer: LiveData is a data holder class that is lifecycle-aware, meaning it automatically updates the UI when the data changes and respects the Android app’s lifecycle. Flow is a reactive stream provided by Kotlin, which can be used with Room to handle asynchronous data updates. While LiveData is designed specifically for Android, Flow is a more general-purpose reactive stream.
+Answer: `LiveData` is a data holder class that is lifecycle-aware, meaning it automatically updates the UI when the data changes and respects the Android app’s lifecycle.
+`Flow` is a reactive stream provided by Kotlin, which can be used with Room to handle asynchronous data updates. While LiveData is designed specifically for Android, Flow is a more general-purpose reactive stream.
 
 ### Q6. How do you perform basic CRUD operations with Room?
 

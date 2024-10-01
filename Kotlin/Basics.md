@@ -1,4 +1,4 @@
-### Q9: May you briefly compare Kotlin vs Java? ☆☆☆
+### Q1: May you briefly compare Kotlin vs Java? ☆☆☆
 
 **Answer:**
 ||||
@@ -14,7 +14,7 @@
 |Functional Programming|Java doesn’t have functional programming support till Java 8 but while developing Android applications it supports the only subset of Java 8 features.|Kotlin is a mix of procedural and functional programming language which consists of many useful methods such as lambda, operator overloading, higher-order functions, and lazy evaluation, etc.|
 
 
-### Q3: Explain advantages of "when" vs "switch" in Kotlin ☆☆☆
+### Q1: Explain advantages of "when" vs "switch" in Kotlin ☆☆☆
 
 **Answer:**
 
@@ -67,7 +67,7 @@ when(number) {
     else -> println("Number is not between 1 and 8") //statement 6
 }
 ```
-### Q4: What are the advantages of Kotlin over Java? ☆☆☆
+### Q3: What are the advantages of Kotlin over Java? ☆☆☆
 
 **Answer:**
 Basically for me less thinking required to write kotlin equivalent to most java code:
@@ -132,7 +132,7 @@ primary constructor
     
 *   kotlin: very nice to be able to quickly write a constructor without any constructor function or extra needless declarations
 
-### Q5: What are some disadvantages of Kotlin? ☆☆☆
+### Q4: What are some disadvantages of Kotlin? ☆☆☆
 
 **Answer:**
 Some think that Kotlin is a mess of extra syntax and keywords. Here are a few keywords which have non-obvious meanings: internal, crossinline, expect, reified, sealed, inner, open. Java has none of these. Kotlin is also amusingly inconsistent in its keywords: a function is is declared with ‘fun’, but an interface is declared with ‘interface’ (not ‘inter’?). Kotlin also doesn’t have checked exceptions. Checked exceptions have become unfashionable, yet many (including me) find them a powerful way to ensure that your code is robust. Finally, Kotlin hides a lot of what goes on. In Java, you can trace through almost every step of program logic. This can be vital for hunting down bugs. In Kotlin, if you define a data class, then getters, setters, equality testing, to string, and hash code are added for you invisibly. This can be a bad idea.
@@ -146,7 +146,7 @@ Also according docs, what Java has that Kotlin does not:
 * Ternary-operator a ? b : c
 
 
-### Q6: What is the difference between "open" and "public" in Kotlin? ☆☆☆
+### Q5: What is the difference between "open" and "public" in Kotlin? ☆☆☆
 
 **Answer:**
 * The **open** keyword means “open for extension“. The open annotation on a class is the opposite of Java's `final`: _it allows others to inherit from this class_.

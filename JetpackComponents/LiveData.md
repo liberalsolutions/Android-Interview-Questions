@@ -13,21 +13,21 @@ Answer:
 ### 3. How does LiveData differ from an Observable?
 Answer:
 
-Lifecycle-awareness: LiveData is lifecycle-aware, meaning it only updates active observers (e.g., when the Activity or Fragment is in the STARTED or RESUMED state), while traditional observables are not and can update regardless of the observer's state.
-No manual management: With LiveData, you don’t have to manually handle lifecycle events to stop or resume updates. Observables require developers to manage this.
-Memory management: LiveData automatically handles memory leaks by removing inactive observers, while you need to manually clean up observers in traditional observables.
+* Lifecycle-awareness: LiveData is lifecycle-aware, meaning it only updates active observers (e.g., when the Activity or Fragment is in the STARTED or RESUMED state), while traditional observables are not and can update regardless of the observer's state.
+* No manual management: With LiveData, you don’t have to manually handle lifecycle events to stop or resume updates. Observables require developers to manage this.
+* Memory management: LiveData automatically handles memory leaks by removing inactive observers, while you need to manually clean up observers in traditional observables.
 
 ### 4. What is `MutableLiveData`, and how does it differ from `LiveData`?
 Answer:
 
-`LiveData`: Is read-only, meaning that it only allows observing data but does not allow modifications to the data.
-`MutableLiveData`: Extends LiveData and allows both observing and updating the data. It provides methods like setValue() or postValue() to update the underlying data.
+* `LiveData`: Is read-only, meaning that it only allows observing data but does not allow modifications to the data.
+* `MutableLiveData`: Extends LiveData and allows both observing and updating the data. It provides methods like `setValue()` or `postValue()`to update the underlying data.
 
 ### 5. What is the difference between setValue() and postValue() in MutableLiveData?
 Answer:
 
-setValue(): Updates the value of LiveData on the main thread. This should be used when you're modifying LiveData from the main (UI) thread.
-postValue(): Posts an update to LiveData asynchronously on a background thread. The change will be made when the main thread processes it..
+`setValue()`: Updates the value of LiveData on the main thread. This should be used when you're modifying LiveData from the main (UI) thread.
+`postValue()`: Posts an update to LiveData asynchronously on a background thread. The change will be made when the main thread processes it..
 ```Java
 // Example:
 mutableLiveData.setValue("New Value")  // Call on the main thread
