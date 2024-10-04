@@ -158,7 +158,122 @@ The with function simplifies code by eliminating the need to repeat the object's
 
 The `also` function is unique in that it performs additional actions on an object while returning the same object. It is useful for side-effect-oriented operations, allowing you to chain multiple actions on an object without altering its structure.
 
+### Q.What is the difference between let and apply in Kotlin?
+
+>let:
+
+* Used to perform an operation on a non-null object.
+* The object is referred to as it.
+* Returns the result of the lambda.
+```Java
+val str = "Hello"
+str?.let {
+    println(it.length)  // Uses 'it' to refer to the object
+}
+```
+>apply:
+
+Used for object initialization or configuration.
+The object is referred to as this.
+Returns the object itself.
+```Java
+val person = Person().apply {
+    name = "John"
+    age = 30
+}  // Returns 'person' after modification
+```
+
+### Q.  What is the difference between run and with?
+
+run:
+
+Can be used as a non-extension function or an extension function.
+In the extension function version, it uses this to refer to the object.
+Returns the result of the lambda expression.
+
+val result = person.run {
+    name = "John"
+    age = 30
+    "Data Updated"
+}  // Returns "Data Updated"
+
+with:
+
+Non-extension function.
+Takes an object as a parameter and operates on it using this.
+Returns the result of the lambda expression
+
+val result = with(person) {
+    name = "John"
+    age = 30
+    "Data Updated"
+}  // Returns "Data Updated"
+
+
+### Q. When would you use also instead of let?
+
+also:
+
+Used for performing additional actions on an object, such as logging or debugging, without modifying the object itself.
+The object is referred to as it.
+Returns the object itself.
+
+val person = Person().also {
+    println("New person created: ${it.name}")
+}
+
+let:
+
+Use let when you need to operate on a nullable object or transform the object.
+Returns the result of the lambda.
+
+### Q. What is the main difference between let and run?
+Answer:
+
+let:
+Refers to the object as it.
+Typically used for null safety and transformation.
+Returns the result of the lambda.
+run:
+Refers to the object as this.
+Commonly used for performing multiple operations on the object.
+Returns the result of the lambda.
+
+### Q. What are the return values of each scope function (let, run, with, apply, also)?
+Answer:
+
+let: Returns the result of the lambda expression.
+run: Returns the result of the lambda expression.
+with: Returns the result of the lambda expression.
+apply: Returns the object itself.
+also: Returns the object itself.
+
+### Q. Explain a scenario where using apply is better than using run.
+Answer: Use apply when you are initializing or configuring an object and want to return the object itself after modification. apply is more concise for this purpose because it returns the object. In contrast, run returns the result of the lambda, which might not be the object itself.
+
+val person = Person().apply {
+    name = "John"
+    age = 30
+}  // Returns 'person' after setting the properties
+
+
 ### Q. What is the difference between `Apply` and `Also`?
 
 
 ### Q. What is the difference between `apply` and `with`?
+
+with: Used when you want to operate on an object but don't need to return the object itself. It returns the result of the lambda expression.
+```Java
+val result = with(person) {
+    name = "John"
+    age = 30
+    "Person Updated"
+}  // Returns "Person Updated"
+```
+apply: Used when you want to configure an object and return the object itself. Ideal for object creation and configuration.
+```Java
+val person = Person().apply {
+    name = "John"
+    age = 30
+}  // Returns 'person'
+```

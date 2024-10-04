@@ -20,3 +20,6 @@
 20. Interface
 21. TypeAlias
 22. Companion Object
+
+
+ Explain the use of by keyword for delegation in Kotlin.

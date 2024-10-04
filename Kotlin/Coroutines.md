@@ -362,3 +362,13 @@ class MyFragment : Fragment() {
 * Best for tying coroutines to the Android lifecycle, such as in Fragments or Activities, to ensure they are automatically canceled when no longer needed.
 
 ![alt text](image-1.png)
+
+
+### Q19. Which dispatcher should you use for CPU-intensive tasks and why?
+Dispatchers.Default is optimized for CPU-intensive operations. It uses a shared pool of threads designed for such tasks, ensuring efficient execution without blocking the main thread.
+
+### Q20. What is the main benefit of combining Dispatchers.IO with SupervisorJob in a CoroutineScope for a service?
+Answer: Combining Dispatchers.IO with SupervisorJob in a CoroutineScope handles IO operations efficiently and ensures that the failure of one coroutine does not cancel others. This combination provides robustness and resilience, making it ideal for services that need to handle multiple independent tasks concurrently.
+
+### Q21. What is the effect of using CoroutineScope(Dispatchers.IO + Job()) in a service?
+Answer: Using CoroutineScope(Dispatchers.IO + Job()) in a service will handle IO operations efficiently. However, any failure in a child coroutine will cancel all child coroutines within the same scope, which might not be ideal for services that need to handle multiple independent tasks concurrently.

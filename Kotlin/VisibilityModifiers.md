@@ -1,4 +1,4 @@
-### What are the visibility modifiers available in Kotlin, and what do they mean?
+### Q. What are the visibility modifiers available in Kotlin, and what do they mean?
 Answer: Kotlin has four visibility modifiers:
 * public: The default modifier. It makes the member visible everywhere (inside and outside the module or class).
 * private: Visible only within the class or file where it is declared.
@@ -97,9 +97,6 @@ class Outer {
 ```
 
 ### Q. What is the difference between internal and public visibility modifiers in Kotlin?
-
-### Q. Can you control the visibility of an object declaration in Kotlin?
-Answer: Yes, you can control the visibility of an object declaration using visibility modifiers (public, private, protected, internal), just like with classes. This applies to both the object itself and its members.
 
 ### Q. Can you control the visibility of an object declaration in Kotlin?
 Answer: Yes, you can control the visibility of an object declaration using visibility modifiers (public, private, protected, internal), just like with classes. This applies to both the object itself and its members.

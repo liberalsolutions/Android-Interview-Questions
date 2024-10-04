@@ -1,21 +1,22 @@
-### Q11: How to initialize an array in Kotlin with values? ☆☆
+### Q1: How to initialize an array in Kotlin with values? ☆☆
 
 **Details:**
 In Java an array can be initialized such as:
 
 ```java
  int numbers[] = new int[] {10, 20, 30, 40, 50}
+ val simpleArray = arrayOf(1, 2, 3)
 ```
 
-How does Kotlin's array initialization look like?
+### Q.2 How does Kotlin's array initialization look like?
 
 **Answer:**
 ```kotlin
-val numbers: IntArray = intArrayOf(10, 20, 30, 40, 50)
-``
+val numbers: Array  = arrayOf(10, 20, 30, 40, 50)
+```
 
 
-### Q14: What is basic difference between fold and reduce in Kotlin? When to use which? ☆☆
+### Q3: What is basic difference between fold and reduce in Kotlin? When to use which? ☆☆
 
 **Answer:**
 * `fold` takes an initial value, and the first invocation of the lambda you pass to it will receive that initial value and the first element of the collection as parameters.

@@ -1,4 +1,4 @@
-### Q. What are relational operators in Kotlin, and how do they work?
+### Q1. What are relational operators in Kotlin, and how do they work?
 Answer: Relational operators compare two values and return a boolean result. In Kotlin, they are:
 == for equality
 != for inequality

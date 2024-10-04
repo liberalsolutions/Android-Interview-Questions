@@ -112,3 +112,5 @@ The purpose is the same as C's or Java's `void`. Only Unit is a proper type, so 
 
 
 > Explain the concept of generics in Kotlin. How are generics used in Android development?
+> All Types of Kotlin Exceptations
+>

@@ -121,7 +121,7 @@ name?.let {
 Collections in Kotlin can either allow null values or be non-nullable. You can define a nullable collection element by using T? for the element type. Example:
 
 ```Kotlin
-Collections in Kotlin can either allow null values or be non-nullable. You can define a nullable collection element by using T? for the element type. Example:
+
 ```
 
 ### Q11. What is a smart cast in Kotlin, and how does it relate to null safety?
