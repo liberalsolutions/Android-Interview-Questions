@@ -2,8 +2,7 @@
 
 **Answer:**
 ||||
-|--- |--- |--- |
-|Java vs Kotlin|Java|Kotlin|
+| Java vs Kotlin | Java|Kotlin |
 |Null Safe|In Java, `NullPointerExceptions` causes huge frustration for developers. It allows users to assign null to any variables but while accessing an object reference having null value raises a null pointer exception which user needs to handle.|In Kotlin, By default, all types of variables are non-null able (i.e. we can’t assign null values to any type of variables/objects). If we try to assign or return null values, Kotlin code will fail during compile-time. If we really want a variable to have a null value, we can declare as follows: `value num: Int? = null`|
 |Extension Functions|In Java, If we want to extend the functionality of existing class we need to create a new class and inherit the parent class. So Extension functions are not available in Java|Kotlin provides developers the ability to extend an existing class with new functionality. We can create extend functions by prefixing the name of a class to name of the new function.|
 |Coroutines Support|In Java, whenever if we initiate a long-running network I/0 or CPU Intensive operations, the corresponding thread will be blocked. As Android is a single-threaded by default. Java provides the ability to create multiple threads in the background and run but managing them is a complex task.|In Kotlin, We can create multiple threads to run these long-running intensive operations but we have coroutines support, which will suspend execution at a certain point without blocking threads while executing long-running intensive operations.|
