@@ -72,3 +72,128 @@ public void addition_isCorrect() {
     assertEquals(4, 2 + 2);
 }
 ```
+
+### Q12. How do you perform unit testing in Android applications?
+
+Unit testing in Android applications involves testing individual components, such as classes or methods, in isolation to verify their behavior. For testing a ViewModel like NewsViewModel that interacts with a repository (NewsRepository), you can use libraries like JUnit and Mockito. Here's how you can perform unit testing for NewsViewModel:
+```Java
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Observer
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(MockitoJUnitRunner::class)
+class NewsViewModelTest {
+
+    // Rule to allow LiveData to be observed on a background thread
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
+
+    // Mock objects
+    @Mock
+    private lateinit var newsRepository: NewsRepository
+    @Mock
+    private lateinit var articlesObserver: Observer<List<Article>>
+    @Mock
+    private lateinit var errorObserver: Observer<String>
+
+    private lateinit var newsViewModel: NewsViewModel
+
+    @Before
+    fun setup() {
+        // Initialize mock objects
+        MockitoAnnotations.initMocks(this)
+
+        // Create the ViewModel instance
+        newsViewModel = NewsViewModel(newsRepository)
+
+        // Set up Observer for the LiveData
+        newsViewModel.getArticles().observeForever(articlesObserver)
+        newsViewModel.getError().observeForever(errorObserver)
+    }
+
+    @Test
+    fun testFetchArticlesSuccess() {
+        // Mock data
+        val mockArticles = listOf(
+            Article("Title 1", "Content 1"),
+            Article("Title 2", "Content 2")
+        )
+        `when`(newsRepository.getArticles()).thenReturn(mockArticles)
+
+        // Call method to fetch articles
+        newsViewModel.fetchArticles()
+
+        // Verify that the repository method is called
+        verify(newsRepository).getArticles()
+
+        // Verify that LiveData emits the correct data
+        verify(articlesObserver).onChanged(mockArticles)
+    }
+
+    @Test
+    fun testFetchArticlesError() {
+        // Mock error message
+        val errorMessage = "Error fetching articles"
+        `when`(newsRepository.getArticles()).thenThrow(RuntimeException(errorMessage))
+
+        // Call method to fetch articles
+        newsViewModel.fetchArticles()
+
+        // Verify that the repository method is called
+        verify(newsRepository).getArticles()
+
+        // Verify that LiveData emits the error message
+        verify(errorObserver).onChanged(errorMessage)
+    }
+}
+```
+
+In this NewsViewModel class, we have a method fetchArticles() that fetches articles from the NewsRepository. If the operation is successful, it updates the articlesLiveData with the fetched articles. If an exception occurs during the operation, it updates the errorLiveData with the error message. The ViewModel provides LiveData objects for observing both the list of articles and any errors that occur during fetching.
+
+### Q13. Can you explain the purpose of Espresso in Android testing? How does it facilitate UI testing?
+Espresso is a widely used testing framework for writing UI tests in Android applications. Its main purpose is to facilitate automated UI testing by providing a concise and expressive API that allows developers to simulate user interactions and assert on UI elements’ behavior
+```Java
+class LoginActivityTest {
+
+    // Rule to launch the activity
+    @get:Rule
+    val activityRule = ActivityScenarioRule(LoginActivity::class.java)
+
+    @Test
+    fun testLoginSuccess() {
+        // Type username and password
+        onView(withId(R.id.editTextUsername)).perform(typeText("user123"))
+        onView(withId(R.id.editTextPassword)).perform(typeText("password123"))
+
+        // Click on the login button
+        onView(withId(R.id.buttonLogin)).perform(click())
+
+        // Verify that the correct activity is launched after successful login
+        onView(withId(R.id.homeActivity)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testLoginFailure() {
+        // Type incorrect username and password
+        onView(withId(R.id.editTextUsername)).perform(typeText("invalid_user"))
+        onView(withId(R.id.editTextPassword)).perform(typeText("invalid_password"))
+
+        // Click on the login button
+        onView(withId(R.id.buttonLogin)).perform(click())
+
+        // Verify that an error message is displayed
+        onView(withId(R.id.textViewErrorMessage)).check(matches(withText("Invalid username or password")))
+    }
+}
+```
+
+* We use `ActivityScenarioRule` to launch the LoginActivity before each test case.
+* In `testLoginSuccess()`, we enter valid credentials and click on the login button, then verify that the correct activity is launched after successful login.
+* In `testLoginFailure()`, we enter invalid credentials and click on the login button, then verify that an error message is displayed.
